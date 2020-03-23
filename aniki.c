@@ -171,10 +171,10 @@ void extract_from_mach_64(char *buffer, size_t size) {
   MachHeader64 header;
 
   header = *(MachHeader64 *)buffer;
-  printf ("ncmds=%d\n"
+  /*printf ("ncmds=%d\n"
           "sizeofcmds=%d\n",
           header.ncmds,
-          header.sizeofcmds);
+          header.sizeofcmds);*/
 
   extract_commands (buffer + sizeof (MachHeader64), header.sizeofcmds, header.ncmds);
 }
@@ -187,7 +187,7 @@ void extract_commands(char *buffer, size_t size, uint32_t ncmds) {
   char *dylibname;
   
   p = buffer;
-  printf ("LC_LOAD_DYLIB=0x%08x\n", LC_LOAD_DYLIB);
+  //printf ("LC_LOAD_DYLIB=0x%08x\n", LC_LOAD_DYLIB);
   for (i = 0; i < ncmds; i++) {
     cmd = *(LoadCommand *)p;
     switch (cmd.cmd) {
@@ -197,7 +197,7 @@ void extract_commands(char *buffer, size_t size, uint32_t ncmds) {
         dylibcmd = *(DylibCommand *)p;
         dylibname = p + dylibcmd.dylib.name.offset;
 
-        printf ("Found library: %s\n", dylibname);
+        printf ("library:%s\n", dylibname);
     }
 
     p += cmd.cmdsize;    
